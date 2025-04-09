@@ -28,7 +28,7 @@ A modern, responsive web dashboard built with **React 19**, **Vite**, **TypeScri
 
 ## 📦 Getting Started
 
-### 1. Clone the repository
+### 1. Clone the repo
 
 ```bash
 git clone https://github.com/shaik-safi/spam-detection-project.git
@@ -37,13 +37,13 @@ cd spam-detection-project
 
 ### 2. Install dependencies
 
-Using **npm**:
+Using npm:
 
 ```bash
 npm install
 ```
 
-Or use `pnpm`, `yarn`, or `bun` if preferred.
+Or with pnpm, yarn, or bun.
 
 ### 3. Start the development server
 
@@ -51,7 +51,7 @@ Or use `pnpm`, `yarn`, or `bun` if preferred.
 npm run dev
 ```
 
-Then open [http://localhost:5173](http://localhost:5173) in your browser.
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
@@ -74,64 +74,68 @@ Then open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ## 🤝 Contributing
 
-Contributions are welcome! 🙌
+Contributions are welcome!
 
-### 👯 Collaborators Guide
-
-To collaborate on this project:
-
-#### 1. Fork & Clone
-
-If not already a collaborator, fork the repo on GitHub, then:
-
-```bash
-git clone https://github.com/<your-username>/spam-detection-project.git
-cd spam-detection-project
-```
-
-#### 2. Set up upstream (only once)
-
-```bash
-git remote add upstream https://github.com/shaik-safi/spam-detection-project.git
-```
-
-#### 3. Sync with the main branch
-
-Before starting work, always pull the latest changes:
-
-```bash
-git pull upstream main
-```
-
-#### 4. Create a new feature branch
+1. Fork the repository  
+2. Create your feature branch:
 
 ```bash
 git checkout -b my-feature
 ```
 
-#### 5. Make changes & commit
+3. Commit your changes:
 
 ```bash
-git add .
-git commit -m "Describe your changes"
+git commit -m 'Add some feature'
 ```
 
-#### 6. Push your branch
+4. Push to the branch:
 
 ```bash
 git push origin my-feature
 ```
 
-#### 7. Create a Pull Request
+5. Open a Pull Request on GitHub
 
-Go to your GitHub repo and click **"Compare & pull request"** to open a PR. Once approved, your feature will be merged!
+---
+
+## 👥 How to Pull and Push Changes (for Collaborators)
+
+If you're added as a **collaborator with write access**, here's how you can contribute directly:
+
+### 1. Clone the Repo
+
+```bash
+git clone https://github.com/shaik-safi/spam-detection-project.git
+cd spam-detection-project
+```
+
+### 2. Create a Branch for Changes
+
+```bash
+git checkout -b my-feature-branch
+```
+
+### 3. Make Changes, Then Commit
+
+```bash
+git add .
+git commit -m "Describe your change"
+```
+
+### 4. Push to GitHub
+
+```bash
+git push origin my-feature-branch
+```
+
+Then either:
+
+- Create a **Pull Request** on GitHub to merge into `main`
+- Or (if trusted), you can merge it yourself
 
 ---
 
 ## 📄 License
 
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
-Happy coding! 🚀
+This project is open-source and available under the [MIT License](LICENSE).
