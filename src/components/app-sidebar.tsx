@@ -9,8 +9,11 @@ import {
   IconFileWord,
   IconFolder,
   IconHelp,
+  IconInbox,
   IconInnerShadowTop,
   IconListDetails,
+  IconMail,
+  IconRecordMail,
   IconReport,
   IconSearch,
   IconSettings,
@@ -33,8 +36,8 @@ import {
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "user",
+    email: "user@gmail.com",
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
@@ -43,25 +46,21 @@ const data = {
       url: "#",
       icon: IconDashboard,
     },
+  
     {
-      title: "Lifecycle",
+      title: "Inbox",
       url: "#",
-      icon: IconListDetails,
+      icon: IconInbox,
     },
     {
-      title: "Analytics",
+      title: "Spam",
       url: "#",
-      icon: IconChartBar,
+      icon: IconDatabase,
     },
     {
-      title: "Projects",
+      title: "Ham",
       url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
+      icon: IconDatabase,
     },
   ],
   navClouds: [
@@ -129,22 +128,13 @@ const data = {
       icon: IconSearch,
     },
   ],
-  documents: [
+  mail: [
     {
-      name: "Data Library",
+      name: "Emails",
       url: "#",
-      icon: IconDatabase,
+      icon: IconMail,
     },
-    {
-      name: "Reports",
-      url: "#",
-      icon: IconReport,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: IconFileWord,
-    },
+    
   ],
 }
 
@@ -168,7 +158,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
+        <NavDocuments items={data.mail} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
