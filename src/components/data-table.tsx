@@ -31,6 +31,7 @@ import {
   IconLoader,
   IconPlus,
   IconTrendingUp,
+  IconAlertCircle,
 } from "@tabler/icons-react"
 import {
   ColumnDef,
@@ -140,29 +141,54 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
     cell: ({ row }) => row.original.message_id,
   },
   {
-    accessorKey: "message",
-    header: "Message",
-    cell: ({ row }) => row.original.message,
-  },
-  {
     accessorKey: "sender_number",
     header: "Sender Number",
     cell: ({ row }) => row.original.sender_number,
   },
   {
-    accessorKey: "receiver_number",
-    header: "Receiver Number",
-    cell: ({ row }) => row.original.receiver_number,
-  },
-  {
     accessorKey: "prediction",
     header: "Prediction",
-    cell: ({ row }) => row.original.prediction,
+    cell: ({ row }) => {
+      const prediction = row.original.prediction;
+      return (
+        <div className="flex items-center">
+        {prediction === "spam" && (
+          <IconAlertCircle className="text-red-500 w-4 h-4 mr-1" />
+        )}
+        {prediction === "ham" && (
+          <div className="w-4 h-4 rounded-full bg-green-500 mr-1" />
+        )}
+          <span className="ml-2">{prediction}</span>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "date",
     header: "Date",
     cell: ({ row }) => row.original.date,
+  },
+  {
+    accessorKey: "message",
+    header: "Message",
+    cell: ({ row }) => {
+      const message = row.original.message; 
+      const maxLength = 200;  
+  
+      return (
+        <div 
+          title={message} 
+          className="truncate max-w-[200px] sm:max-w-[300px] md:max-w-[400px] overflow-hidden text-ellipsis"
+        >
+          {message.length > maxLength ? `${message.substring(0, maxLength)}...` : message}
+        </div>
+      );
+    },
+  },  
+  {
+    accessorKey: "view message",
+    header: "View Message",
+    cell: ({ row }) => <TableCellViewer item={row.original} />,
   },
 ]
 
@@ -190,6 +216,7 @@ function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
     </TableRow>
   )
 }
+
 
 export function DataTable({
   data: initialData,
@@ -258,14 +285,14 @@ export function DataTable({
 
   return (
     <Tabs
-      defaultValue="outline"
+      defaultValue="inbox"
       className="w-full flex-col justify-start gap-6"
     >
       <div className="flex items-center justify-between px-4 lg:px-6">
         <Label htmlFor="view-selector" className="sr-only">
           View
         </Label>
-        <Select defaultValue="outline">
+        <Select defaultValue="inbox">
           <SelectTrigger
             className="flex w-fit @4xl/main:hidden"
             size="sm"
@@ -274,21 +301,19 @@ export function DataTable({
             <SelectValue placeholder="Select a view" />
           </SelectTrigger>
           <SelectContent>
-          <SelectItem value="inbox">Inbox</SelectItem>
+            <SelectItem value="inbox">Inbox</SelectItem>
             <SelectItem value="spam">Spam</SelectItem>
             <SelectItem value="ham">Ham</SelectItem>
-            <SelectItem value="email">Email</SelectItem>
           </SelectContent>
         </Select>
         <TabsList className="**:data-[slot=badge]:bg-muted-foreground/30 hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:px-1 @4xl/main:flex">
-        <TabsTrigger value="inbox">Inbox</TabsTrigger>
+          <TabsTrigger value="inbox">Inbox</TabsTrigger>
           <TabsTrigger value="spam">
-            Spam <Badge variant="secondary">3</Badge>
+          Spam <Badge variant="secondary">3</Badge>
           </TabsTrigger>
           <TabsTrigger value="ham">
-            Ham <Badge variant="secondary">2</Badge>
+          Ham <Badge variant="secondary">2</Badge>
           </TabsTrigger>
-          <TabsTrigger value="email">Email</TabsTrigger>
         </TabsList>
         <div className="flex items-center gap-2">
           <DropdownMenu>
@@ -331,7 +356,7 @@ export function DataTable({
         </div>
       </div>
       <TabsContent
-        value="outline"
+        value="inbox"
         className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6"
       >
         <div className="overflow-hidden rounded-lg border">
@@ -464,13 +489,87 @@ export function DataTable({
         </div>
       </TabsContent>
       <TabsContent
-        value="past-performance"
-        className="flex flex-col px-4 lg:px-6"
+        value="spam"
+        className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6"
       >
-        <div className="aspect-video w-full flex-1 rounded-lg border border-dashed"></div>
+        <div className="overflow-hidden rounded-lg border">
+          <DndContext
+            collisionDetection={closestCenter}
+            modifiers={[restrictToVerticalAxis]}
+            onDragEnd={handleDragEnd}
+            sensors={sensors}
+            id={sortableId}
+          >
+            <Table>
+              <TableHeader className="bg-muted sticky top-0 z-10">
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => (
+                      <TableHead key={header.id} colSpan={header.colSpan}>
+                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableHeader>
+              <TableBody className="**:data-[slot=table-cell]:first:w-8">
+                {table.getRowModel().rows?.length ? (
+                  <SortableContext items={dataIds} strategy={verticalListSortingStrategy}>
+                    {table.getRowModel().rows.map((row) => (
+                      <DraggableRow key={row.id} row={row} />
+                    ))}
+                  </SortableContext>
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={columns.length} className="h-24 text-center">
+                      No results.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </DndContext>
+        </div>
       </TabsContent>
-      <TabsContent value="key-personnel" className="flex flex-col px-4 lg:px-6">
-        <div className="aspect-video w-full flex-1 rounded-lg border border-dashed"></div>
+      <TabsContent value="ham" className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6">
+        <div className="overflow-hidden rounded-lg border">
+          <DndContext
+            collisionDetection={closestCenter}
+            modifiers={[restrictToVerticalAxis]}
+            onDragEnd={handleDragEnd}
+            sensors={sensors}
+            id={sortableId}
+          >
+            <Table>
+              <TableHeader className="bg-muted sticky top-0 z-10">
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => (
+                      <TableHead key={header.id} colSpan={header.colSpan}>
+                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableHeader>
+              <TableBody className="**:data-[slot=table-cell]:first:w-8">
+                {table.getRowModel().rows?.length ? (
+                  <SortableContext items={dataIds} strategy={verticalListSortingStrategy}>
+                    {table.getRowModel().rows.map((row) => (
+                      <DraggableRow key={row.id} row={row} />
+                    ))}
+                  </SortableContext>
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={columns.length} className="h-24 text-center">
+                      No results.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </DndContext>
+        </div>
       </TabsContent>
       <TabsContent
         value="focus-documents"
@@ -508,135 +607,38 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
   return (
     <Drawer direction={isMobile ? "bottom" : "right"}>
       <DrawerTrigger asChild>
-        <Button variant="link" className="text-foreground w-fit px-0 text-left">
-          {item.message}
+        <Button variant="link" className="text-blue-600 hover:underline px-0">
+          View
         </Button>
       </DrawerTrigger>
       <DrawerContent>
-        <DrawerHeader className="gap-1">
-          <DrawerTitle>{item.message}</DrawerTitle>
-          <DrawerDescription>
-            Showing details for {item.message}
-          </DrawerDescription>
+        <DrawerHeader>
+          <DrawerTitle>Message Details</DrawerTitle>
+          <DrawerDescription>Full message and metadata below</DrawerDescription>
         </DrawerHeader>
-        <div className="flex flex-col gap-4 overflow-y-auto px-4 text-sm">
-          {!isMobile && (
-            <>
-              <ChartContainer config={chartConfig}>
-                <AreaChart
-                  accessibilityLayer
-                  data={chartData}
-                  margin={{
-                    left: 0,
-                    right: 10,
-                  }}
-                >
-                  <CartesianGrid vertical={false} />
-                  <XAxis
-                    dataKey="month"
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={8}
-                    tickFormatter={(value) => value.slice(0, 3)}
-                    hide
-                  />
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent indicator="dot" />}
-                  />
-                  <Area
-                    dataKey="mobile"
-                    type="natural"
-                    fill="var(--color-mobile)"
-                    fillOpacity={0.6}
-                    stroke="var(--color-mobile)"
-                    stackId="a"
-                  />
-                  <Area
-                    dataKey="desktop"
-                    type="natural"
-                    fill="var(--color-desktop)"
-                    fillOpacity={0.4}
-                    stroke="var(--color-desktop)"
-                    stackId="a"
-                  />
-                </AreaChart>
-              </ChartContainer>
-              <Separator />
-              <div className="grid gap-2">
-                <div className="flex gap-2 leading-none font-medium">
-                  Trending up by 5.2% this month{" "}
-                  <IconTrendingUp className="size-4" />
-                </div>
-                <div className="text-muted-foreground">
-                  Showing total visitors for the last 6 months. This is just
-                  some random text to test the layout. It spans multiple lines
-                  and should wrap around.
-                </div>
-              </div>
-              <Separator />
-            </>
-          )}
-          <form className="flex flex-col gap-4">
-            <div className="flex flex-col gap-3">
-              <Label htmlFor="header">Header</Label>
-              <Input id="header" defaultValue={item.message} />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col gap-3">
-                <Label htmlFor="type">Type</Label>
-                <Select defaultValue={item.prediction}>
-                  <SelectTrigger id="type" className="w-full">
-                    <SelectValue placeholder="Select a type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="spam">Spam</SelectItem>
-                    <SelectItem value="ham">Ham</SelectItem>
-                    <SelectItem value="email">Email</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="flex flex-col gap-3">
-                <Label htmlFor="status">Status</Label>
-                <Select defaultValue={item.prediction}>
-                  <SelectTrigger id="status" className="w-full">
-                    <SelectValue placeholder="Select a status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="spam">Spam</SelectItem>
-                    <SelectItem value="ham">Ham</SelectItem>
-                    <SelectItem value="email">Email</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col gap-3">
-                <Label htmlFor="target">Target</Label>
-                <Input id="target" defaultValue={item.sender_number} />
-              </div>
-              <div className="flex flex-col gap-3">
-                <Label htmlFor="limit">Limit</Label>
-                <Input id="limit" defaultValue={item.receiver_number} />
-              </div>
-            </div>
-            <div className="flex flex-col gap-3">
-              <Label htmlFor="reviewer">Reviewer</Label>
-              <Select defaultValue={item.date}>
-                <SelectTrigger id="reviewer" className="w-full">
-                  <SelectValue placeholder="Select a reviewer" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value={item.date}>{item.date}</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </form>
+        <div className="px-6 py-4 text-sm space-y-4">
+          <div>
+            <strong>Message ID:</strong> {item.message_id}
+          </div>
+          <div>
+            <strong>Message:</strong> {item.message}
+          </div>
+          <div>
+            <strong>Sender Number:</strong> {item.sender_number}
+          </div>
+          <div>
+            <strong>Receiver Number:</strong> {item.receiver_number}
+          </div>
+          <div>
+            <strong>Prediction:</strong> {item.prediction}
+          </div>
+          <div>
+            <strong>Date:</strong> {item.date}
+          </div>
         </div>
         <DrawerFooter>
-          <Button>Submit</Button>
           <DrawerClose asChild>
-            <Button variant="outline">Done</Button>
+            <Button variant="outline">Close</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
