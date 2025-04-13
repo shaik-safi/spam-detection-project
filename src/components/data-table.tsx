@@ -220,10 +220,15 @@ function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
 
 export function DataTable({
   data: initialData,
+  spamData,
+  hamData,
 }: {
-  data: z.infer<typeof schema>[]
+  data: z.infer<typeof schema>[],
+  spamData: z.infer<typeof schema>[],
+  hamData: z.infer<typeof schema>[],
 }) {
-  const [data, setData] = React.useState(() => initialData)
+  const [selectedTab, setSelectedTab] = React.useState("inbox");
+  const [data, setData] = React.useState(() => initialData);
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
@@ -246,6 +251,17 @@ export function DataTable({
     () => data?.map(({ message_id }) => message_id) || [],
     [data]
   )
+
+  // Update data based on the selected tab
+  React.useEffect(() => {
+    if (selectedTab === "spam") {
+      setData(spamData);
+    } else if (selectedTab === "ham") {
+      setData(hamData);
+    } else {
+      setData(initialData);
+    }
+  }, [selectedTab, spamData, hamData, initialData]);
 
   const table = useReactTable({
     data,
@@ -287,6 +303,7 @@ export function DataTable({
     <Tabs
       defaultValue="inbox"
       className="w-full flex-col justify-start gap-6"
+      onValueChange={setSelectedTab}
     >
       <div className="flex items-center justify-between px-4 lg:px-6">
         <Label htmlFor="view-selector" className="sr-only">
@@ -309,10 +326,10 @@ export function DataTable({
         <TabsList className="**:data-[slot=badge]:bg-muted-foreground/30 hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:px-1 @4xl/main:flex">
           <TabsTrigger value="inbox">Inbox</TabsTrigger>
           <TabsTrigger value="spam">
-          Spam <Badge variant="secondary">3</Badge>
+          Spam
           </TabsTrigger>
           <TabsTrigger value="ham">
-          Ham <Badge variant="secondary">2</Badge>
+          Ham
           </TabsTrigger>
         </TabsList>
         <div className="flex items-center gap-2">

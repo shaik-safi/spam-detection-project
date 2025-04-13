@@ -6,6 +6,8 @@ import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 
 import data from "../assets/data.json"
+import spamData from "../assets/spamData.json"
+import hamData from "../assets/hamData.json"
 
 export default function Dashboard() {
   return (
@@ -20,7 +22,11 @@ export default function Dashboard() {
               <div className="px-4 lg:px-6">
                 <ChartAreaInteractive />
               </div>
-              <DataTable data={data} />
+              <DataTable
+                data={data}
+                spamData={spamData}
+                hamData={hamData}
+              />
             </div>
           </div>
         </div>
