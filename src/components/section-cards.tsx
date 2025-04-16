@@ -9,7 +9,23 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-export function SectionCards() {
+type SectionCardsProps = {
+  totalMessages: number;
+  spamCount: number;
+  hamCount: number;
+  spamPercentage: number;
+  hamPercentage: number;
+  modelAccuracy: number;
+};
+
+export function SectionCards({
+  totalMessages,
+  spamCount,
+  hamCount,
+  spamPercentage,
+  hamPercentage,
+  modelAccuracy,
+}: SectionCardsProps) {
   return (
     <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
 
@@ -18,7 +34,7 @@ export function SectionCards() {
         <CardHeader>
           <CardDescription>Total Messages</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            4,560
+            {totalMessages}
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
@@ -38,12 +54,12 @@ export function SectionCards() {
         <CardHeader>
           <CardDescription>Spam Messages</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            1,230
+            {spamCount}
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
               <IconX className="size-4 mr-1" />
-              27% Spam
+              {spamPercentage}% Spam
             </Badge>
           </CardAction>
         </CardHeader>
@@ -58,12 +74,12 @@ export function SectionCards() {
         <CardHeader>
           <CardDescription>Ham Messages</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            3,330
+            {hamCount}
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
               <IconCheck className="size-4 mr-1" />
-              73% Ham
+              {hamPercentage}% Ham
             </Badge>
           </CardAction>
         </CardHeader>
@@ -73,12 +89,12 @@ export function SectionCards() {
         </CardFooter>
       </Card>
 
-      {/* Accuracy (Static for now) */}
+      {/* Accuracy */}
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Model Accuracy</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            94.2%
+            {modelAccuracy}%
           </CardTitle>
           <CardAction>
             <Badge variant="outline">
