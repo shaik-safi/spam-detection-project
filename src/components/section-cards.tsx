@@ -105,7 +105,7 @@ export function SectionCards({
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="font-medium">Avg of 3 ML models</div>
-          <div className="text-muted-foreground">F1-score or custom metric</div>
+          <div className="text-muted-foreground"><strong>Models used:</strong> Naive Bayes, Random Forest, SVC</div>
         </CardFooter>
       </Card>
 

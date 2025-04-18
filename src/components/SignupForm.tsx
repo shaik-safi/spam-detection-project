@@ -72,7 +72,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
                 <Input
                   id="name"
                   type="text"
-                  placeholder="John Doe"
+                  placeholder="Shaik Safi"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   required
@@ -84,7 +84,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
                 <Input
                   id="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder="shaiksafidev@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -96,7 +96,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
                 <Input
                   id="phone"
                   type="tel"
-                  placeholder="+91 9876543210"
+                  placeholder="+91 9008154697"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   required

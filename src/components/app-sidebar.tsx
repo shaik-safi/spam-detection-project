@@ -36,9 +36,9 @@ import {
 
 const data = {
   user: {
-    name: "user",
-    email: "user@gmail.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: localStorage.getItem("name"),
+    email: localStorage.getItem("email"),
+    avatar: "SF",
   },
   navMain: [
     {
@@ -130,8 +130,18 @@ const data = {
   ],
   mail: [
     {
-      name: "Emails",
+      title: "Scam Emails",
+      name: "Emails Dashboard",
       url: "#",
+      icon: IconMail,
+    },
+    
+  ],
+  sms: [
+    {
+      title: "Spam SMS",
+      name: "SMS Dashboard",
+      url: "http://localhost:5173/sms-dashboard",
       icon: IconMail,
     },
     
@@ -150,16 +160,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <a href="#">
                 <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <span className="text-base font-semibold">SAGE ML</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        {/* <NavMain items={data.navMain} /> */}
+        <NavDocuments items={data.sms} />
         <NavDocuments items={data.mail} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

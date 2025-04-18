@@ -31,8 +31,10 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
     try {
       const response = await axios.post("http://localhost:8080/api/auth/login", user);
       if (response.status === 200) {
-        localStorage.setItem("token", response.data.token); // Store JWT token
-        navigate("/"); // Redirect to a protected route
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("name", response.data.name);
+        localStorage.setItem("email", response.data.email);
+        navigate("/sms-dashboard"); // Redirect to a protected route
       }
     } catch (err) {
       const error = err as AxiosError<ErrorResponse>; // Cast the error to AxiosError with ErrorResponse
@@ -71,12 +73,6 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
-                  <a
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </a>
                 </div>
                 <Input
                   id="password"
