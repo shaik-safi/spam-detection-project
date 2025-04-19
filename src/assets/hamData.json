@@ -1,0 +1,26 @@
+[
+    {
+      "message_id": 1,
+      "message": "Hi! Just wanted to check in and see how you're doing.",
+      "sender_number": "4567890123",
+      "receiver_number": "3987654321",
+      "prediction": "ham",
+      "date": "2025-01-04"
+    },
+    {
+      "message_id": 2,
+      "message": "Your appointment is confirmed for tomorrow at 10 AM.",
+      "sender_number": "5678901234",
+      "receiver_number": "4987654321",
+      "prediction": "ham",
+      "date": "2025-01-05"
+    },
+    {
+      "message_id": 3,
+      "message": "Don't forget to bring your documents for the meeting next week.",
+      "sender_number": "6789012345",
+      "receiver_number": "5987654321",
+      "prediction": "ham",
+      "date": "2025-01-06"
+    }
+  ]

@@ -1,0 +1,26 @@
+[
+    {
+      "message_id": 1,
+      "message": "Congratulations! You've won a $1,000 Walmart gift card. Click here to claim your prize.",
+      "sender_number": "1234567890",
+      "receiver_number": "0987654321",
+      "prediction": "spam",
+      "date": "2025-01-01"
+    },
+    {
+      "message_id": 2,
+      "message": "Urgent: Your account has been compromised. Please verify your identity immediately.",
+      "sender_number": "2345678901",
+      "receiver_number": "1987654320",
+      "prediction": "spam",
+      "date": "2025-01-02"
+    },
+    {
+      "message_id": 3,
+      "message": "Get paid to work from home! Sign up now for more information.",
+      "sender_number": "3456789012",
+      "receiver_number": "2987654321",
+      "prediction": "spam",
+      "date": "2025-01-03"
+    }
+  ]
