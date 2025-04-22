@@ -29,7 +29,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
     const user = { email, password };
 
     try {
-      const response = await axios.post("http://localhost:8080/api/auth/login", user);
+      const response = await axios.post("http://spam-detection-spring-app-env.eba-qetpumkm.ap-south-1.elasticbeanstalk.com/api/auth/login", user);
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("name", response.data.name);

@@ -50,7 +50,7 @@ export default function Dashboard() {
           return;
         }
   
-        const res = await axios.get<DashboardData>("http://localhost:8080/api/dashboard", {
+        const res = await axios.get<DashboardData>("http://spam-detection-spring-app-env.eba-qetpumkm.ap-south-1.elasticbeanstalk.com/api/dashboard", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

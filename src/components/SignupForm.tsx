@@ -39,7 +39,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
     const user = { email, password, name: fullName, receiverNumber: phone };
 
     try {
-      const response = await axios.post("http://localhost:8080/api/auth/register", user);
+      const response = await axios.post("http://spam-detection-spring-app-env.eba-qetpumkm.ap-south-1.elasticbeanstalk.com/api/auth/register", user);
       if (response.status === 201) {
         navigate("/login"); // Redirect to login page on successful signup
       }
