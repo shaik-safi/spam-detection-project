@@ -129,12 +129,12 @@ const data = {
     },
   ],
   mail: [
-    {
-      title: "Scam Emails",
-      name: "Emails Dashboard",
-      url: "#",
-      icon: IconMail,
-    },
+    // {
+    //   title: "Scam Emails",
+    //   name: "Emails Dashboard",
+    //   url: "#",
+    //   icon: IconMail,
+    // },
     
   ],
   sms: [
