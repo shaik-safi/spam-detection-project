@@ -9,8 +9,11 @@ import {
   IconFileWord,
   IconFolder,
   IconHelp,
+  IconInbox,
   IconInnerShadowTop,
   IconListDetails,
+  IconMail,
+  IconRecordMail,
   IconReport,
   IconSearch,
   IconSettings,
@@ -33,9 +36,9 @@ import {
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: localStorage.getItem("name"),
+    email: localStorage.getItem("email"),
+    avatar: "SF",
   },
   navMain: [
     {
@@ -43,25 +46,21 @@ const data = {
       url: "#",
       icon: IconDashboard,
     },
+  
     {
-      title: "Lifecycle",
+      title: "Inbox",
       url: "#",
-      icon: IconListDetails,
+      icon: IconInbox,
     },
     {
-      title: "Analytics",
+      title: "Spam",
       url: "#",
-      icon: IconChartBar,
+      icon: IconDatabase,
     },
     {
-      title: "Projects",
+      title: "Ham",
       url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
+      icon: IconDatabase,
     },
   ],
   navClouds: [
@@ -129,22 +128,23 @@ const data = {
       icon: IconSearch,
     },
   ],
-  documents: [
+  mail: [
+    // {
+    //   title: "Scam Emails",
+    //   name: "Emails Dashboard",
+    //   url: "#",
+    //   icon: IconMail,
+    // },
+    
+  ],
+  sms: [
     {
-      name: "Data Library",
-      url: "#",
-      icon: IconDatabase,
+      title: "Spam SMS",
+      name: "SMS Dashboard",
+      url: "http://localhost:5173/sms-dashboard",
+      icon: IconMail,
     },
-    {
-      name: "Reports",
-      url: "#",
-      icon: IconReport,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: IconFileWord,
-    },
+    
   ],
 }
 
@@ -160,16 +160,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <a href="#">
                 <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <span className="text-base font-semibold">SAGE ML</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        {/* <NavMain items={data.navMain} /> */}
+        <NavDocuments items={data.sms} />
+        <NavDocuments items={data.mail} />
+        {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
